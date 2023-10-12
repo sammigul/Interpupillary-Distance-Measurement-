@@ -63,9 +63,9 @@ def live_video_analysis():
         # Detecting faces --> returns a list of rectangles(faces)
         faces = detector(grey) 
         for face in faces: 
-            # x, y = face.left(), face.top()
-            # x1, y1 = face.right(), face.bottom()
-            # cv2.rectangle(frame, (x,y), (x1,y1), (0,255,0), 2)
+            x, y = face.left(), face.top()
+            x1, y1 = face.right(), face.bottom()
+            cv2.rectangle(frame, (x,y), (x1,y1), (0,255,0), 2)
 
             # Detecting landmarks --> returns a list of 68 points
 
@@ -106,8 +106,48 @@ def live_video_analysis():
     cap.release()
     cv2.destroyAllWindows()
 
-# Calling Image Analysis Funct here 
-# imageAnalysis(image_path)
+
+
+'''
+Using template matching to match the credit card in the image
+
+'''
+import cv2
+
+def template_matching():
+    img = cv2.resize(cv2.imread('test2.jpeg', 0), (0, 0), fx=0.8, fy=0.8)
+    template = cv2.imread('template3.png', 0)
+    
+    # Preprocess the template by applying guassian blur
+    # template = cv2.GaussianBlur(template, (5, 5), 0)
+    
+    h, w = template.shape
+    
+    # Choose 
+    method = cv2.TM_CCORR_NORMED
+    
+    img2 = img.copy()
+    result = cv2.matchTemplate(img2, template, method)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    
+    # threshold for matching
+    threshold = 0.8
+    
+    if max_val > threshold:
+        location = max_loc
+        bottom_right = (location[0] + w, location[1] + h)
+        cv2.line(img2, location, bottom_right, 255, 5)
+        # cv2.rectangle(img2, location, bottom_right, 255, 5)
+        cv2.imshow('Match', img2)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    else:
+        print("Template not found")
+
+template_matching()
 
 # For Live Video 
-live_video_analysis()
+# live_video_analysis()
+
+# Calling Image Analysis Funct here 
+# imageAnalysis(image_path)
