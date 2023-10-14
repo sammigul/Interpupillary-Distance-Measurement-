@@ -23,6 +23,7 @@ def live_video_analysis(marker_size_mm,aruco_dict_type):
         # Converting frame to grey scale
         grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) 
 
+        
         px_mm_ratio = calculate_pixel_mm_ratio_video(frame, marker_size_mm, aruco_dict_type)
             
         # Detecting faces --> returns a list of rectangles(faces)
