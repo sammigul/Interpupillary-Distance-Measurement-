@@ -53,7 +53,9 @@ Before using this project, you need to have the following dependencies installed
 
 ## Usage
 
-To calculate the IPD from a live camera feed, run `calculate_ipd_live.py`. To measure IPD from an image, use `calculate_ipd_image.py`. Follow the on-screen instructions to capture or load images and calculate the IPD.
+To calculate the IPD from a live camera feed, 
+uncomment the live_image_analysis method call in the main.py file, similarly you can call the image_analysis method in the main.py folder
+but make sure that the image path, aruco Marker size and aruco dictionary are provided in the arguments. 
 
 ## Contributing
 
